@@ -300,7 +300,7 @@ namespace MXU
 
                     if (fileInfo.Extension == ".dwg")
                     {
-                        // infoTextBox.Text += $"{Environment.NewLine}This is a DWG file";
+                        infoTextBox.Text += $"{Environment.NewLine}This is a DWG file";
 
                         try
                         {
@@ -314,21 +314,18 @@ namespace MXU
 
                             try
                             {                                
-                            // Create an instance of your class from the DLL
                             MyAcadLib myAcadLib = new MyAcadLib();
 
-                                // Call a method from your class
                                 string result = myAcadLib._GetUniqueId();
                                 infoTextBox.Text += $"\nUniqueID from MyAcadLib DLL:\n{result}";
                                 Console.WriteLine($"Executing ObjectARX command: _GetUniqueID");
-                                // MessageBox.Show($"Executing ObjectARX command: _GetUniqueID");
                             }
                             catch (System.Exception ex)
                             {
                                 MessageBox.Show($"Error executing DLL: {ex.Message}");
                             }
 
-                                // wrapper.CloseDrawing();
+                            // wrapper.CloseDrawing();
 
                         }
                         catch (System.Exception ex)
