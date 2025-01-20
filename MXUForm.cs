@@ -18,8 +18,8 @@ using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Runtime;
 using Autodesk.AutoCAD.Windows;
-// using Autodesk.AutoCAD.Interop;
-// using Autodesk.AutoCAD.Interop.Common;
+using Autodesk.AutoCAD.Interop;
+using Autodesk.AutoCAD.Interop.Common;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -313,12 +313,19 @@ namespace MXU
                             // wrapper.RunObjectARXCommand("_GetUniqueID");
 
                             try
-                            {                                
-                            MyAcadLib myAcadLib = new MyAcadLib();
+                            {
 
-                                string result = myAcadLib._GetUniqueId();
+                                Autodesk.AutoCAD.Interop.AcadApplication acadApp = new Autodesk.AutoCAD.Interop.AcadApplication();
+                                Autodesk.AutoCAD.Interop.AcadDocument acadDoc = acadApp.Documents.Open(drawingPath);
+                                dynamic acadDb = acadDoc.Database;
+                                MyAcadLib myAcadLib = new MyAcadLib();
+
+                                string result = myAcadLib._GetUniqueId(acadDb);
                                 infoTextBox.Text += $"\nUniqueID from MyAcadLib DLL:\n{result}";
                                 Console.WriteLine($"Executing ObjectARX command: _GetUniqueID");
+
+                                acadDoc.Close(false);
+                                acadApp.Quit();
                             }
                             catch (System.Exception ex)
                             {
